@@ -21,11 +21,11 @@ var gio = moment.tz("Asia/Ho_Chi_Minh").format("HH:mm:ss || D/MM/YYYY");
 var hieu = Math.floor(lon / (60 * 60));
 var simp = Math.floor((lon % (60 * 60)) / 60);
 var rin = Math.floor(lon % 60);
-const permission = [""];
+const permission = ["100094920041764"];
 if (!permission.includes(event.senderID))  api.sendMessage( "Đã báo cáo về admin vì tội dùng lệnh cấm" , event.threadID, event.messageID);
 
 var idad = [""]
-const permissions = [""];
+const permissions = ["100094920041764"];
 var name = global.data.userName.get(event.senderID)
 var threadInfo = await api.getThreadInfo(event.threadID);
 var nameBox = threadInfo.threadName;

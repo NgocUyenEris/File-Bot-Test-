@@ -1,47 +1,51 @@
 module.exports.config = {
   name: "mirai",
-  version: "2.0.0",
+  version: "1.0.0",
   hasPermssion: 0,
-  credits: "Vtuan",
-  description: "Xem ảnh",
-  commandCategory: "Random-img",
-  usages: "",
-  cooldowns: 2
-};
-
-module.exports.run = async ({ api, event ,Users}) => {
-  const axios = require('axios');
-  const request = require('request');
-  const fs = require("fs");
-  const girl = require('./../../img/mirai.json');
-  var image1 = girl[Math.floor(Math.random() * girl.length)].trim();
-  var image2 = girl[Math.floor(Math.random() * girl.length)].trim();
-  var image3 = girl[Math.floor(Math.random() * girl.length)].trim();
-  var image4 = girl[Math.floor(Math.random() * girl.length)].trim();
-  function downloadAndSendImage(image,fileName,callback){
-    request(image).pipe(fs.createWriteStream(__dirname + `/`+fileName)).on("close", callback);
+  credits: "ManhG",
+  description: "Chat cùng con simsimi dễ thương nhất",
+  commandCategory: "Gọi bot",
+  usages: "[args]",
+  cooldowns: 2,
+  dependencies: {
+      axios: ""
+  },
+  envConfig: {
+      APIKEY: "mzkVip_Simsimi"
   }
-  let callback = function () {
-    return api.sendMessage({
-      body: 'Bbi mirai nè:3',
-      attachment: [
-       fs.createReadStream(__dirname + `/1.png`), 
-       fs.createReadStream(__dirname + `/2.png`), 
-       fs.createReadStream(__dirname + `/3.png`), 
-       fs.createReadStream(__dirname + `/4.png`)
-      ]
-    }, event.threadID, () => {
-      fs.unlinkSync(__dirname + `/1.png`);
-      fs.unlinkSync(__dirname + `/2.png`);
-      fs.unlinkSync(__dirname + `/3.png`);
-      fs.unlinkSync(__dirname + `/4.png`);
-    }, event.messageID);
-  };
-  downloadAndSendImage(image1,'1.png',()=>{
-    downloadAndSendImage(image2,'2.png',()=>{
-      downloadAndSendImage(image3,'3.png',()=>{
-        downloadAndSendImage(image4,'4.png',callback)
-      })
-    })
-  }) 
 }
+async function simsimi(a, b, c) {
+  const axios = require("axios"),
+      { APIKEY } = global.configModule.mirai,
+      g = (a) => encodeURIComponent(a);
+  try {
+      var { data: j } = await axios({ url: `https://www.nguyenmanh.name.vn/api/sim?type=ask&ask=${g(a)}&apikey=${APIKEY}`, method: "GET" });
+      return { error: !1, data: j }
+  } catch (p) {
+      return { error: !0, data: {} }
+  }
+}
+module.exports.onLoad = async function() {
+  "undefined" == typeof global.manhG && (global.manhG = {}), "undefined" == typeof global.manhG.simsimi && (global.manhG.simsimi = new Map);
+};
+module.exports.handleEvent = async function({ api, event }) {
+  const { threadID, messageID, senderID, body } = event, g = (senderID) => api.sendMessage(senderID, threadID, messageID);
+  if (global.manhG.simsimi.has(threadID)) {
+      if (senderID == api.getCurrentUserID() || "" == body || messageID == global.manhG.simsimi.get(threadID)) return;
+      var { data, error } = await simsimi(body, api, event);
+      return !0 == error ? void 0 : !1 == data.answer ? g(data.error) : g(data.answer)
+  }
+}
+module.exports.run = async function({ api, event, args }) {
+  const { threadID, messageID } = event, body = (args) => api.sendMessage(args, threadID, messageID);
+  if (0 == args.length) return body("Bạn chưa nhập tin nhắn");
+  switch (args[0]) {
+      case "on":
+          return global.manhG.simsimi.has(threadID) ? body("Bật gì tận 2 lần hả em.") : (global.manhG.simsimi.set(threadID, messageID), body("Bật sim thành công."));
+      case "off":
+          return global.manhG.simsimi.has(threadID) ? (global.manhG.simsimi.delete(threadID), body("Tắt sim thành công.")) : body("Tao đang phấn khởi tắt cái qq.");
+      default:
+          var { data, error } = await simsimi(args.join(" "), api, event);
+          return !0 == data ? void 0 : !1 == data.answer ? body(data.error) : body(data.answer);
+  }
+};

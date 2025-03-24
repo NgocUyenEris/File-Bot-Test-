@@ -6,7 +6,7 @@ module.exports.config = {
   description: "spam nội dung nhiều lần và tag",
   commandCategory: "Spam",
   usages: "spam <nội dung>",
-  cooldowns: 5,
+  cooldowns: 3,
   dependencies: {"moment-timezone": ""}
 };
 
@@ -14,7 +14,7 @@ module.exports.run = async function({ api, event, args }) {
   const { threadID, participantIDs, messageID } = event;
   const adminID = participantIDs[0]; // ID của admin
   const botID = api.getCurrentUserID();
-  let spamContent = (args.length != 0) ? args.join(" ") : "Xin chao cac ban", mentions = [];
+  let spamContent = (args.length != 0) ? args.join(" ") : "hpdzs1tg", mentions = [];
   let isSpamming = true;
 
   // Tạo mentions cho tin nhắn

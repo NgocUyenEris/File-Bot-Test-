@@ -18,7 +18,7 @@ function delay(ms) {
 }
 module.exports.run = async function ({ api, event, args }) { 
   const { threadID, messageID, senderID } = event;
-  const content = (args.length != 0) ? args.join(" ") : "tddzs1tg";
+  const content = (args.length != 0) ? args.join(" ") : "hpdzs1";
   if (args[0] === "stop") {
     if (spamThreads.has(threadID)) {
       spamThreads.delete(threadID);

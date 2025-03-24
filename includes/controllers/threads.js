@@ -34,7 +34,7 @@ module.exports = function ({ models, api }) {
 		} 
 		catch (error) { 
 			console.error(error);
-            throw new Error(error);
+						throw new Error(error);
 		}
 	}
 
@@ -51,7 +51,7 @@ module.exports = function ({ models, api }) {
 				console.error(error);
 				throw new Error(error);
 			}
-			
+
 		}
 	}
 

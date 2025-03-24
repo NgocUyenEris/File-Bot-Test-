@@ -4,7 +4,7 @@ module.exports.config = {
   hasPermssion: 0,
   credits: "tdunguwu",
   description: "lấy mail ở 10mm thôi",
-  commandCategory: "Tiện ích",
+  commandCategory: "Công Cụ",
   usages: "",
   cooldowns: 2,
   dependencies: {"axios" : ""}

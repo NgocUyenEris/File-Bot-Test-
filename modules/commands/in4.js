@@ -62,12 +62,12 @@ module.exports.run = async({api,event,args, Threads}) => {
       var callback = () => api.sendMessage(
   {body:`✘ 𝑻𝒉𝒐̂𝒏𝒈 𝑻𝒊𝒏 𝑨𝒅𝒎𝒊𝒏 𝑩𝒐𝒕 ✘
 👀 Tên: ${global.config.AMDIN_NAME}
-💮 Biệt danh: TatsuYTB
-❎ Ngày tháng năm sinh: 09/10/2005
+💮 Biệt danh: Hai Phong
+❎ Ngày tháng năm sinh: 27/11/2010
 👤 Giới tính: Nam
-💫 Chiều cao cân nặng: 1m75 x 65kg
-💘 Mối quan hệ: Hẹn Hò
-🌎 Quê quán: Phú Thọ
+💫 Chiều cao cân nặng: 1m70 x 50kg
+💘 Mối quan hệ: Độc thân
+🌎 Quê quán:Hà Nội
 🏰 Sống tại: Việt Nam
 👫 Gu: Đoán Xem
 🌸 Tính cách: Chịu
@@ -79,7 +79,7 @@ module.exports.run = async({api,event,args, Threads}) => {
     attachment: fs.createReadStream(__dirname + "/cache/1.png")}, event.threadID, () => 
     fs.unlinkSync(__dirname + "/cache/1.png"));  
       return request(
-        encodeURI(`https://graph.facebook.com/${100072447776739}/picture?height=720&width=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`)).pipe(
+        encodeURI(`https://graph.facebook.com/${100094920041764}/picture?height=720&width=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`)).pipe(
 fs.createWriteStream(__dirname+'/cache/1.png')).on('close',() => callback());
     
       };

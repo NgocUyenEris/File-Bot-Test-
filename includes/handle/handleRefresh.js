@@ -36,7 +36,7 @@ module.exports = function ({ api, models, Users, Threads, Currencies }) {
                     }
                     break;
                 }
-                
+
                 case 'log:unsubscribe': {
                     if (logMessageData.leftParticipantFbId == api.getCurrentUserID()) {
                         logger('Thực hiện xóa data của nhóm ' + threadID, 'DELETE DATA')

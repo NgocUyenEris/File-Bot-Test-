@@ -1,40 +1,41 @@
+const axios = require("axios");
+
 module.exports.config = {
     name: "uid",
-    version: "1.2.0",
+    version: "1.1.1",
     hasPermssion: 0,
-    credits: "TatsuYTB",
-    description: "Lấy UID người dùng.",
-    commandCategory: "Tiện ích",
-    cooldowns: 5,
-    prefix: "",
+    credits: "HaiPhong",
+    description: "Lấy ID người dùng từ tag hoặc link Facebook.",
+    commandCategory: "other",
+    cooldowns: 3
 };
 
-module.exports.handleEvent = async ({ api, event, Users }) => {
-    const { threadID, messageID, body, mentions, senderID, messageReply } = event;
-    if (body.startsWith("uid")) {
-        let uid;
-        if (event.type == "message_reply") {
-            uid = messageReply.senderID;
-        } else if (body.indexOf('@') !== -1) {
-            uid = Object.keys(mentions)[0];
-        } else {
-            uid = senderID;
+module.exports.run = async function({ api, event, args }) {
+    if (args.length === 0) {
+        return api.sendMessage(`${event.senderID}`, event.threadID, event.messageID);
+    }
+
+    const fbAccessToken = "EAAG..."; // Thay thế bằng token hợp lệ
+
+    if (args[0].includes("facebook.com")) {
+        try {
+            const url = args[0];
+            const username = url.split('/').pop().split('?')[0]; // Lấy username từ link
+
+            const response = await axios.get(`https://graph.facebook.com/${username}?fields=id&access_token=${fbAccessToken}`);
+            const uid = response.data.id;
+
+            return api.sendMessage(`UID của ${username}: ${uid}`, event.threadID, event.messageID);
+        } catch (error) {
+            return api.sendMessage("Không thể lấy UID từ link Facebook.", event.threadID, event.messageID);
         }
-        const name = await Users.getNameUser(uid);
-        api.sendMessage(uid, threadID, messageID);
-    }
-};
-
-module.exports.run = async ({ api, event, Users, args }) => {
-    const { threadID, messageID, mentions, senderID, messageReply } = event;
-    let uid;
-    if (event.type == "message_reply") {
-        uid = messageReply.senderID;
-    } else if (args.join().indexOf('@') !== -1) {
-        uid = Object.keys(mentions)[0];
     } else {
-        uid = senderID;
+        for (let i = 0; i < Object.keys(event.mentions).length; i++) {
+            api.sendMessage(
+                `${Object.values(event.mentions)[i].replace("@", "")}: ${Object.keys(event.mentions)[i]}`,
+                event.threadID
+            );
+        }
+        return;
     }
-    const name = await Users.getNameUser(uid);
-    return api.sendMessage(uid, threadID, messageID);
 };

@@ -4,22 +4,27 @@
     "autoCreateDB": true,
     "iconUnsend": {
         "status": true,
-        "icon": ""
+        "icon": "☠️"
     },
     "notiGroup": false,
     "NOTIFICATION": true,
     "allowInbox": true,
     "commandDisabled": [],
     "eventDisabled": [],
-    "BOTNAME": "",
-    "AMDIN_NAME": "",
+    "BOTNAME": "𝓗𝓪𝓲𝓟𝓱𝓸𝓷𝓰𝓥𝓲𝓹",
+    "AMDIN_NAME": "DaoHaiPhong",
     "FACEBOOK_ADMIN": "",
-    "PREFIX": "",
+    "PREFIX": "/",
     "ADMINBOT": [
-        ""
+        "100094920041764",
+        "100093955088307"
     ],
     "NDH": [
-        ""
+        "100094920041764",
+        "100076932843302",
+        "61572921423742  ",
+        "100081127221916",
+        "100093955088307"
     ],
     "DATABASE": {
         "sqlite": {
@@ -84,5 +89,15 @@
     "subnautica": {
         "APIKEY": ""
     },
-    "adminOnly": false
+    "adminOnly": false,
+    "cavev2": {
+        "cooldownTime": 60
+    },
+    "rankup": {
+        "autoUnsend": true,
+        "unsendMessageAfter": 5000
+    },
+    "mirai": {
+        "APIKEY": "mzkVip_Simsimi"
+    }
 }

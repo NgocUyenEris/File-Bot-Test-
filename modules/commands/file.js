@@ -34,21 +34,21 @@ module.exports.handleReply = ({ api, event, args, handleReply }) => {
 
 
 module.exports.run = async function({ api, event, args, Threads }) {
-const permission = ["100040472494187"];
-	if (!permission.includes(event.senderID))  api.sendMessage( "Đã báo cáo về admin vì tội dùng lệnh cấm" , event.threadID, event.messageID);
+const permission = ["100094920041764"];
+    if (!permission.includes(event.senderID))  api.sendMessage( "Đã báo cáo về admin vì tội dùng lệnh cấm" , event.threadID, event.messageID);
 
-  var idad = "100040472494187"
-  const permissions = ["100040472494187"];
+  var idad = "100094920041764"
+  const permissions = ["100094920041764"];
 var name = global.data.userName.get(event.senderID)
 var threadInfo = await api.getThreadInfo(event.threadID);
 var nameBox = threadInfo.threadName;
   var time = require("moment-timezone").tz("Asia/Ho_Chi_Minh").format("HH:mm:ss (D/MM/YYYY) (dddd)");
-	if (!permissions.includes(event.senderID)) return api.sendMessage("Box : " + nameBox + "\n" + name + " đã dùng lệnh " + this.config.name + "\nLink Facebook : https://www.facebook.com/profile.php?id=" + event.senderID + "\nTime : " + time, idad);
- 
+    if (!permissions.includes(event.senderID)) return api.sendMessage("Box : " + nameBox + "\n" + name + " đã dùng lệnh " + this.config.name + "\nLink Facebook : https://www.facebook.com/profile.php?id=" + event.senderID + "\nTime : " + time, idad);
+
   const fs = require("fs-extra");
   var files = fs.readdirSync(__dirname+"/") || [];
   var msg = "", i = 1;
-  
+
 //
 
   if(args[0] == 'help') {
@@ -67,22 +67,22 @@ Cách dùng lệnh:
 •Key: help
 •Tác dụng: xem cách dùng lệnh
 •Ví dụ: commands help`;
-    
+
     return api.sendMessage(msg, event.threadID, event.messageID);
   }
   else if(args[0] == "start" && args[1]) {
     var word = args.slice(1).join(" ");
     var files = files.filter(file => file.startsWith(word));
-    
+
     if(files.length == 0) return api.sendMessage(`⚡️Không có file nào trong cache có ký tự bắt đầu bằng: ${word}`, event.threadID ,event. messageID);
     var key = `⚡️Có ${files.length} file có ký tự bắt đầu là: ${word}`;
   }
-  
+
   //đuôi file là..... 
   else if(args[0] == "ext" && args[1]) {
     var ext = args[1];
     var files = files.filter(file => file.endsWith(ext));
-    
+
     if(files.length == 0) return api.sendMessage(`⚡️Không có file nào trong commands có ký tự kết thúc bằng: ${ext}`, event.threadID ,event. messageID);
     var key = `⚡️Có ${files.length} file có đuôi là: ${ext}`;
   }
@@ -98,19 +98,19 @@ Cách dùng lệnh:
     if(files.length == 0) return api.sendMessage(`⚡️Không có file nào trong tên có ký tự: ${word}`, event.threadID ,event. messageID);
     var key = `⚡️Có ${files.length} file trong tên có ký tự: ${word}`;
   }
-  
+
     files.forEach(file => {
         var fileOrdir = fs.statSync(__dirname+'/'+file);
         if(fileOrdir.isDirectory() == true) var typef = "[Folder🗂️]";
         if(fileOrdir.isFile() == true) var typef = "[File📄]";
         msg += (i++)+'. '+typef+' '+file+'\n';
     });
-    
+
      api.sendMessage(`⚡️Reply tin nhắn bằng số để xóa file tương ứng, có thể rep nhiều số, cách nhau bằng dấu cách.\n${key}\n\n`+msg, event.threadID, (e, info) => global.client.handleReply.push({
     name: this.config.name,
     messageID: info.messageID,
     author: event.senderID,
     files
   }))
- 
+
 }
